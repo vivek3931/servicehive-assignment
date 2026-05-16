@@ -1,12 +1,106 @@
 @import "tailwindcss";
-
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
+  --color-primary: #111111;
+  --color-primary-focus: #000000;
+  --color-primary-on-dark: #ffffff;
+  --color-primary-focus-dark: #e5e5e5;
+  --color-ink: #111111;
+  --color-ink-muted-80: #444444;
+  --color-ink-muted-48: #888888;
+  --color-body-muted-dark: #a1a1aa;
+  --color-canvas: #ffffff;
+  --color-canvas-parchment: #fafafa;
+  --color-surface-pearl: #f4f4f5;
+  --color-surface-tile-1: #09090b;
+  --color-surface-tile-2: #18181b;
+  --color-surface-tile-3: #27272a;
+  --color-surface-black: #000000;
+  
+  --color-divider-soft: rgba(0, 0, 0, 0.06);
+  --color-divider-hairline: #e4e4e7;
+
+  --font-display: "Inter", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-body {
-  @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+@layer base {
+  body {
+    @apply bg-canvas-parchment text-ink font-body dark:bg-surface-tile-1 dark:text-white antialiased transition-colors duration-300;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .apple-btn-primary {
+    @apply bg-primary text-white dark:bg-primary-on-dark dark:text-ink font-medium rounded-md px-5 py-2.5 transition-all duration-200 ease-out focus:outline-2 focus:outline-offset-2 focus:outline-primary disabled:opacity-50 shadow-sm hover:shadow-md hover:-translate-y-[1px];
+  }
+  .apple-btn-primary:active {
+    @apply transform translate-y-0 shadow-sm;
+  }
+  
+  .apple-btn-secondary {
+    @apply bg-white text-ink dark:bg-surface-tile-2 dark:text-white border border-divider-hairline dark:border-surface-tile-3 font-medium rounded-md px-5 py-2.5 transition-all duration-200 ease-out focus:outline-2 focus:outline-offset-2 focus:outline-primary disabled:opacity-50 shadow-sm hover:bg-canvas-parchment dark:hover:bg-surface-tile-3 hover:-translate-y-[1px];
+  }
+  .apple-btn-secondary:active {
+    @apply transform translate-y-0;
+  }
+
+  .apple-btn-utility {
+    @apply bg-white text-ink dark:bg-surface-tile-2 dark:text-white font-medium text-[13px] rounded-md px-4 py-2 transition-all duration-200 ease-out disabled:opacity-50 cursor-pointer border border-divider-hairline dark:border-surface-tile-3 shadow-sm hover:bg-canvas-parchment dark:hover:bg-surface-tile-3;
+  }
+  .apple-btn-utility:active {
+    @apply transform scale-95;
+  }
+
+  .apple-card {
+    @apply bg-canvas dark:bg-surface-tile-2 border border-divider-hairline dark:border-surface-tile-3 rounded-lg p-6 shadow-sm transition-all duration-300;
+  }
+  .apple-card:hover {
+    @apply shadow-md border-divider-soft dark:border-surface-tile-3;
+  }
+
+  .apple-input-box {
+    @apply bg-canvas dark:bg-surface-tile-2 text-ink dark:text-white border border-divider-hairline dark:border-surface-tile-3 rounded-md px-4 py-2.5 text-[15px] focus:outline-none focus:border-primary dark:focus:border-primary-on-dark focus:ring-1 focus:ring-primary dark:focus:ring-primary-on-dark disabled:opacity-50 transition-all duration-200 shadow-sm;
+  }
+  .apple-input-box:hover {
+    @apply border-ink-muted-48 dark:border-body-muted-dark;
+  }
+
+  .apple-nav-frosted {
+    @apply bg-canvas/80 dark:bg-surface-tile-1/80 backdrop-blur-md border-b border-divider-hairline dark:border-surface-tile-3;
+  }
+
+  .apple-table-th {
+    @apply px-6 py-4 text-left text-[13px] font-medium text-ink-muted-48 dark:text-body-muted-dark border-b border-divider-hairline dark:border-surface-tile-3 uppercase tracking-wider;
+  }
+  .apple-table-td {
+    @apply px-6 py-4 whitespace-nowrap text-[15px] border-b border-divider-hairline dark:border-surface-tile-3;
+  }
+
+  .apple-link {
+    @apply text-ink-muted-80 dark:text-body-muted-dark font-medium transition-colors hover:text-ink dark:hover:text-white underline decoration-divider-hairline dark:decoration-surface-tile-3 underline-offset-4 hover:decoration-ink dark:hover:decoration-white;
+  }
+
+  .apple-active {
+    @apply transition-transform duration-100 ease-in-out cursor-pointer;
+  }
+  .apple-active:active {
+    transform: scale(0.95);
+  }
 }

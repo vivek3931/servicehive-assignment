@@ -3,7 +3,7 @@ import api from '../services/api';
 import { useDebounce } from '../hooks/useDebounce';
 import toast from 'react-hot-toast';
 import { Plus, Search, Filter, Download, Edit2, Trash2 } from 'lucide-react';
-import LeadModal, { LeadFormData } from '../components/LeadModal';
+import LeadModal, { type LeadFormData } from '../components/LeadModal';
 import { useAuth } from '../context/AuthContext';
 
 interface Lead {
@@ -23,14 +23,12 @@ export default function Leads() {
   const [pages, setPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  // Filters
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 500);
   const [statusFilter, setStatusFilter] = useState('');
   const [sourceFilter, setSourceFilter] = useState('');
   const [sortOption, setSortOption] = useState('latest');
 
-  // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingLead, setEditingLead] = useState<Lead | null>(null);
 
@@ -120,62 +118,41 @@ export default function Leads() {
   };
 
   const statusColors = {
-    New: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
-    Contacted: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300',
-    Qualified: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
-    Lost: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
+    New: 'bg-zinc-100 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700',
+    Contacted: 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50',
+    Qualified: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/50',
+    Lost: 'bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400 border border-rose-200 dark:border-rose-800/50',
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Leads</h1>
-        <div className="flex gap-3">
-          <button
-            onClick={exportCSV}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none transition-colors"
-          >
-            <Download className="mr-2 h-4 w-4" />
-            Export CSV
+    <div className="max-w-[1440px] mx-auto space-y-[32px]">
+      <div className="flex justify-between items-end">
+        <h1 className="text-[40px] font-semibold text-ink dark:text-white tracking-[0px]">Leads</h1>
+        <div className="flex gap-3 mb-2">
+          <button onClick={exportCSV} className="apple-btn-secondary flex items-center">
+            <Download className="mr-2 h-4 w-4" /> Export CSV
           </button>
-          <button
-            onClick={() => {
-              setEditingLead(null);
-              setIsModalOpen(true);
-            }}
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none transition-colors"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            Add Lead
+          <button onClick={() => { setEditingLead(null); setIsModalOpen(true); }} className="apple-btn-primary flex items-center">
+            <Plus className="mr-2 h-4 w-4" /> Add Lead
           </button>
         </div>
       </div>
 
       {/* Filters Bar */}
-      <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 flex flex-wrap gap-4 items-center justify-between transition-colors">
-        <div className="flex flex-1 min-w-[200px] gap-2 items-center border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-gray-50 dark:bg-gray-900 transition-colors">
-          <Search className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+      <div className="apple-card p-[16px] flex flex-wrap gap-4 items-center justify-between">
+        <div className="flex flex-1 min-w-[240px] gap-2 items-center bg-canvas-parchment dark:bg-surface-tile-3 rounded-pill px-4 h-[44px]">
+          <Search className="h-4 w-4 text-ink-muted-48 dark:text-body-muted-dark" />
           <input
             type="text"
             placeholder="Search by name or email..."
-            className="bg-transparent border-none focus:outline-none w-full text-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+            className="bg-transparent border-none focus:outline-none w-full text-[17px] text-ink dark:text-white placeholder-ink-muted-48 dark:placeholder-body-muted-dark"
             value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
           />
         </div>
 
-        <div className="flex flex-wrap gap-4 items-center">
-          <select
-            value={statusFilter}
-            onChange={(e) => {
-              setStatusFilter(e.target.value);
-              setPage(1);
-            }}
-            className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors"
-          >
+        <div className="flex flex-wrap gap-3 items-center">
+          <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }} className="apple-input-box">
             <option value="">All Statuses</option>
             <option value="New">New</option>
             <option value="Contacted">Contacted</option>
@@ -183,28 +160,14 @@ export default function Leads() {
             <option value="Lost">Lost</option>
           </select>
 
-          <select
-            value={sourceFilter}
-            onChange={(e) => {
-              setSourceFilter(e.target.value);
-              setPage(1);
-            }}
-            className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors"
-          >
+          <select value={sourceFilter} onChange={(e) => { setSourceFilter(e.target.value); setPage(1); }} className="apple-input-box">
             <option value="">All Sources</option>
             <option value="Website">Website</option>
             <option value="Instagram">Instagram</option>
             <option value="Referral">Referral</option>
           </select>
 
-          <select
-            value={sortOption}
-            onChange={(e) => {
-              setSortOption(e.target.value);
-              setPage(1);
-            }}
-            className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors"
-          >
+          <select value={sortOption} onChange={(e) => { setSortOption(e.target.value); setPage(1); }} className="apple-input-box">
             <option value="latest">Sort by Latest</option>
             <option value="oldest">Sort by Oldest</option>
           </select>
@@ -212,85 +175,52 @@ export default function Leads() {
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors">
+      <div className="apple-card p-0 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead className="bg-gray-50 dark:bg-gray-900/50">
+          <table className="min-w-full text-left border-collapse">
+            <thead className="bg-canvas-parchment dark:bg-surface-tile-3">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Contact
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Source
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Date
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Actions
-                </th>
+                <th className="apple-table-th">Name</th>
+                <th className="apple-table-th">Contact</th>
+                <th className="apple-table-th">Status</th>
+                <th className="apple-table-th">Source</th>
+                <th className="apple-table-th">Date</th>
+                <th className="apple-table-th text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody className="bg-canvas dark:bg-surface-tile-2">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
-                    Loading leads...
-                  </td>
+                  <td colSpan={6} className="apple-table-td text-center text-ink-muted-48 dark:text-body-muted-dark py-10">Loading leads...</td>
                 </tr>
               ) : leads.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-gray-500 dark:text-gray-400 flex flex-col items-center">
-                    <Filter className="h-10 w-10 text-gray-300 dark:text-gray-600 mb-2" />
-                    <p>No leads found matching your criteria.</p>
+                  <td colSpan={6} className="apple-table-td text-center py-[48px]">
+                    <div className="flex flex-col items-center text-ink-muted-48 dark:text-body-muted-dark">
+                      <Filter className="h-10 w-10 mb-4 opacity-50" />
+                      <p>No leads found matching your criteria.</p>
+                    </div>
                   </td>
                 </tr>
               ) : (
                 leads.map((lead) => (
-                  <tr key={lead._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">{lead.name}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-500 dark:text-gray-400">{lead.email}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          statusColors[lead.status]
-                        }`}
-                      >
+                  <tr key={lead._id} className="hover:bg-canvas-parchment dark:hover:bg-surface-tile-3 transition-colors">
+                    <td className="apple-table-td font-semibold text-ink dark:text-white">{lead.name}</td>
+                    <td className="apple-table-td text-ink-muted-80 dark:text-body-muted-dark">{lead.email}</td>
+                    <td className="apple-table-td">
+                      <span className={`px-[12px] py-[4px] inline-flex text-[12px] font-semibold rounded-pill ${statusColors[lead.status]}`}>
                         {lead.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      {lead.source}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      {new Date(lead.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button
-                        onClick={() => {
-                          setEditingLead(lead);
-                          setIsModalOpen(true);
-                        }}
-                        className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 mr-4 transition-colors"
-                      >
-                        <Edit2 className="h-4 w-4" />
+                    <td className="apple-table-td text-ink-muted-80 dark:text-body-muted-dark">{lead.source}</td>
+                    <td className="apple-table-td text-ink-muted-80 dark:text-body-muted-dark">{new Date(lead.createdAt).toLocaleDateString()}</td>
+                    <td className="apple-table-td text-right">
+                      <button onClick={() => { setEditingLead(lead); setIsModalOpen(true); }} className="text-zinc-600 dark:text-zinc-400 hover:text-ink dark:hover:text-white mr-4 apple-active inline-block transition-colors">
+                        <Edit2 className="h-[18px] w-[18px]" />
                       </button>
                       {user?.role === 'Admin' && (
-                        <button
-                          onClick={() => handleDelete(lead._id)}
-                          className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 transition-colors"
-                        >
-                          <Trash2 className="h-4 w-4" />
+                        <button onClick={() => handleDelete(lead._id)} className="text-red-600 dark:text-red-400 hover:opacity-80 apple-active inline-block">
+                          <Trash2 className="h-[18px] w-[18px]" />
                         </button>
                       )}
                     </td>
@@ -303,47 +233,21 @@ export default function Leads() {
 
         {/* Pagination */}
         {!loading && leads.length > 0 && (
-          <div className="bg-white dark:bg-gray-800 px-4 py-3 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between sm:px-6 transition-colors">
-            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  Showing <span className="font-medium">{(page - 1) * 10 + 1}</span> to{' '}
-                  <span className="font-medium">
-                    {Math.min(page * 10, total)}
-                  </span>{' '}
-                  of <span className="font-medium">{total}</span> results
-                </p>
-              </div>
-              <div>
-                <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                  <button
-                    onClick={() => setPage(Math.max(1, page - 1))}
-                    disabled={page === 1}
-                    className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
-                  >
-                    Previous
-                  </button>
-                  <button
-                    onClick={() => setPage(Math.min(pages, page + 1))}
-                    disabled={page === pages}
-                    className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
-                  >
-                    Next
-                  </button>
-                </nav>
-              </div>
+          <div className="bg-canvas dark:bg-surface-tile-2 px-6 py-4 flex items-center justify-between border-t border-divider-hairline dark:border-surface-tile-3">
+            <div>
+              <p className="text-[14px] text-ink-muted-80 dark:text-body-muted-dark">
+                Showing <span className="font-semibold text-ink dark:text-white">{(page - 1) * 10 + 1}</span> to <span className="font-semibold text-ink dark:text-white">{Math.min(page * 10, total)}</span> of <span className="font-semibold text-ink dark:text-white">{total}</span> results
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1} className="apple-btn-utility">Previous</button>
+              <button onClick={() => setPage(Math.min(pages, page + 1))} disabled={page === pages} className="apple-btn-utility">Next</button>
             </div>
           </div>
         )}
       </div>
 
-      <LeadModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleCreateOrUpdate}
-        initialData={editingLead}
-        title={editingLead ? 'Edit Lead' : 'Add New Lead'}
-      />
+      <LeadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={handleCreateOrUpdate} initialData={editingLead} title={editingLead ? 'Edit Lead' : 'Add New Lead'} />
     </div>
   );
 }

@@ -72,14 +72,14 @@ export default function LeadModal({ isOpen, onClose, onSubmit, initialData, titl
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
-        <div className="fixed inset-0 transition-opacity bg-gray-500 dark:bg-gray-900 bg-opacity-75 dark:bg-opacity-80" onClick={onClose} />
+        <div className="fixed inset-0 transition-opacity bg-surface-black/40 dark:bg-surface-black/60 backdrop-blur-sm" onClick={onClose} />
 
-        <div className="relative inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center justify-between mb-5">
-            <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">{title}</h3>
+        <div className="relative inline-block w-full max-w-md p-[24px] my-8 overflow-hidden text-left align-middle transition-all transform apple-card border-none">
+          <div className="flex items-center justify-between mb-[24px]">
+            <h3 className="text-[21px] font-semibold tracking-[0.231px] text-ink dark:text-white">{title}</h3>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none transition-colors"
+              className="text-ink-muted-48 hover:text-ink dark:text-body-muted-dark dark:hover:text-white apple-active"
             >
               <X className="w-5 h-5" />
             </button>
@@ -87,33 +87,33 @@ export default function LeadModal({ isOpen, onClose, onSubmit, initialData, titl
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+              <label className="block text-[14px] font-semibold tracking-[-0.224px] text-ink-muted-80 dark:text-body-muted-dark mb-1">Name</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className={`mt-1 block w-full rounded-md border ${errors.name ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'} px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors`}
+                className={`apple-input-box w-full ${errors.name ? 'border-red-500 dark:border-red-500' : ''}`}
               />
-              {errors.name && <p className="mt-1 text-xs text-red-500 dark:text-red-400">{errors.name}</p>}
+              {errors.name && <p className="mt-1 text-[12px] text-red-500 dark:text-red-400">{errors.name}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+              <label className="block text-[14px] font-semibold tracking-[-0.224px] text-ink-muted-80 dark:text-body-muted-dark mb-1">Email</label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className={`mt-1 block w-full rounded-md border ${errors.email ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'} px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors`}
+                className={`apple-input-box w-full ${errors.email ? 'border-red-500 dark:border-red-500' : ''}`}
               />
-              {errors.email && <p className="mt-1 text-xs text-red-500 dark:text-red-400">{errors.email}</p>}
+              {errors.email && <p className="mt-1 text-[12px] text-red-500 dark:text-red-400">{errors.email}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+              <label className="block text-[14px] font-semibold tracking-[-0.224px] text-ink-muted-80 dark:text-body-muted-dark mb-1">Status</label>
               <select
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors"
+                className="apple-input-box w-full"
               >
                 <option value="New">New</option>
                 <option value="Contacted">Contacted</option>
@@ -123,11 +123,11 @@ export default function LeadModal({ isOpen, onClose, onSubmit, initialData, titl
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Source</label>
+              <label className="block text-[14px] font-semibold tracking-[-0.224px] text-ink-muted-80 dark:text-body-muted-dark mb-1">Source</label>
               <select
                 value={formData.source}
                 onChange={(e) => setFormData({ ...formData, source: e.target.value as any })}
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors"
+                className="apple-input-box w-full"
               >
                 <option value="Website">Website</option>
                 <option value="Instagram">Instagram</option>
@@ -135,18 +135,18 @@ export default function LeadModal({ isOpen, onClose, onSubmit, initialData, titl
               </select>
             </div>
 
-            <div className="mt-6 flex justify-end gap-3">
+            <div className="mt-8 flex justify-end gap-3">
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none transition-colors"
+                className="apple-btn-secondary"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none disabled:opacity-50 transition-colors"
+                className="apple-btn-primary"
               >
                 {loading ? 'Saving...' : 'Save'}
               </button>
