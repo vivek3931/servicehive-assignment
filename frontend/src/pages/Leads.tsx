@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../services/api';
 import { useDebounce } from '../hooks/useDebounce';
 import toast from 'react-hot-toast';
@@ -233,15 +233,15 @@ export default function Leads() {
 
         {/* Pagination */}
         {!loading && leads.length > 0 && (
-          <div className="bg-canvas dark:bg-surface-tile-2 px-6 py-4 flex items-center justify-between border-t border-divider-hairline dark:border-surface-tile-3">
-            <div>
+          <div className="bg-canvas dark:bg-surface-tile-2 px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-divider-hairline dark:border-surface-tile-3">
+            <div className="text-center sm:text-left">
               <p className="text-[14px] text-ink-muted-80 dark:text-body-muted-dark">
                 Showing <span className="font-semibold text-ink dark:text-white">{(page - 1) * 10 + 1}</span> to <span className="font-semibold text-ink dark:text-white">{Math.min(page * 10, total)}</span> of <span className="font-semibold text-ink dark:text-white">{total}</span> results
               </p>
             </div>
-            <div className="flex gap-2">
-              <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1} className="apple-btn-utility">Previous</button>
-              <button onClick={() => setPage(Math.min(pages, page + 1))} disabled={page === pages} className="apple-btn-utility">Next</button>
+            <div className="flex gap-2 w-full sm:w-auto justify-center">
+              <button onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1} className="apple-btn-utility flex-1 sm:flex-none justify-center">Previous</button>
+              <button onClick={() => setPage(Math.min(pages, page + 1))} disabled={page === pages} className="apple-btn-utility flex-1 sm:flex-none justify-center">Next</button>
             </div>
           </div>
         )}

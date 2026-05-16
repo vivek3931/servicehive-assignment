@@ -1,4 +1,4 @@
-import React from 'react';
+// removed import React
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';

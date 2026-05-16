@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LogOut, LayoutDashboard, Users, Moon, Sun, Menu, User } from 'lucide-react';
+import logo from '../assets/logo.avif';
 
 export default function Layout() {
   const { user, logout, loading } = useAuth();
@@ -76,13 +77,9 @@ export default function Layout() {
         ${isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full md:translate-x-0 md:w-[80px]'}`}
       >
         <div className="h-[64px] flex items-center px-6 border-b border-divider-hairline dark:border-surface-tile-3 overflow-hidden shrink-0">
-          {isSidebarOpen ? (
-            <h1 className="text-[21px] font-semibold tracking-[0.231px] text-ink dark:text-white whitespace-nowrap transition-opacity duration-300">
-              Smart Leads
-            </h1>
-          ) : (
-            <div className="w-8 h-8 bg-primary text-white dark:bg-primary-on-dark dark:text-ink rounded-lg flex items-center justify-center font-bold text-lg shrink-0 -ml-2 hidden md:flex">
-              SL
+          {isSidebarOpen && (
+            <div className="flex items-center w-full">
+              <img src={logo} alt="Smart Leads" className="h-[28px] w-auto object-contain shrink-0" />
             </div>
           )}
         </div>
