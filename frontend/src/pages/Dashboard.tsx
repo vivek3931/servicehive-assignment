@@ -157,7 +157,7 @@ export default function Dashboard() {
               <div className="w-8 h-8 border-2 border-ink dark:border-white border-t-transparent rounded-full animate-spin"></div>
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={300}>
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
@@ -178,62 +178,62 @@ export default function Dashboard() {
           )}
         </div>
       </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activity */}
-        <div className="apple-card p-0 overflow-hidden lg:col-span-2 flex flex-col h-full">
-          <div className="px-6 py-5 border-b border-divider-hairline dark:border-surface-tile-3 flex justify-between items-center">
-            <h2 className="text-[18px] font-bold text-ink dark:text-white tracking-tight">Recent Leads</h2>
-          </div>
-          <div className="divide-y divide-divider-hairline dark:divide-surface-tile-3 flex-1 overflow-y-auto">
-            {loading ? (
-              <div className="p-10 flex justify-center items-center">
-                <div className="w-6 h-6 border-2 border-ink dark:border-white border-t-transparent rounded-full animate-spin"></div>
+    
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Recent Activity */}
+            <div className="apple-card p-0 overflow-hidden lg:col-span-2 flex flex-col h-full">
+              <div className="px-6 py-5 border-b border-divider-hairline dark:border-surface-tile-3 flex justify-between items-center">
+                <h2 className="text-[18px] font-bold text-ink dark:text-white tracking-tight">Recent Leads</h2>
               </div>
-            ) : recentLeads.length === 0 ? (
-              <div className="p-10 text-center flex flex-col items-center justify-center h-full">
-                <div className="w-16 h-16 bg-canvas-parchment dark:bg-surface-tile-3 rounded-full flex items-center justify-center mb-4 mx-auto">
-                  <Users className="w-8 h-8 text-ink-muted-48 dark:text-body-muted-dark" />
-                </div>
-                <p className="text-[15px] text-ink-muted-80 dark:text-body-muted-dark">No recent activity to show.</p>
-              </div>
-            ) : (
-              recentLeads.map((lead) => (
-                <div key={lead._id} className="p-5 flex items-center justify-between hover:bg-canvas-parchment dark:hover:bg-surface-tile-3 transition-colors group">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-ink dark:bg-white text-white dark:text-ink flex items-center justify-center font-bold text-sm shadow-sm group-hover:scale-105 transition-transform">
-                      {getInitials(lead.name)}
-                    </div>
-                    <div>
-                      <p className="text-[15px] font-semibold text-ink dark:text-white">{lead.name}</p>
-                      <p className="text-[13px] text-ink-muted-80 dark:text-body-muted-dark mt-0.5">
-                        Added on {new Date(lead.createdAt).toLocaleDateString()}
-                      </p>
-                    </div>
+              <div className="divide-y divide-divider-hairline dark:divide-surface-tile-3 flex-1 overflow-y-auto">
+                {loading ? (
+                  <div className="p-10 flex justify-center items-center">
+                    <div className="w-6 h-6 border-2 border-ink dark:border-white border-t-transparent rounded-full animate-spin"></div>
                   </div>
-                  <span className={`px-[12px] py-[4px] inline-flex text-[12px] font-semibold rounded-full shadow-sm ${statusColors[lead.status] || 'bg-gray-100 text-gray-800 border border-gray-200'}`}>
-                    {lead.status}
-                  </span>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
-        {/* Lead Sources Pie Chart */}
-        <div className="apple-card p-0 overflow-hidden flex flex-col h-full">
-          <div className="px-6 py-5 border-b border-divider-hairline dark:border-surface-tile-3">
-            <h2 className="text-[18px] font-bold text-ink dark:text-white tracking-tight">Top Sources</h2>
-          </div>
-          <div className="p-6 flex-1 flex flex-col items-center justify-center">
-            {loading ? (
-              <div className="w-6 h-6 border-2 border-ink dark:border-white border-t-transparent rounded-full animate-spin"></div>
-            ) : pieData.length === 0 ? (
-              <p className="text-[15px] text-ink-muted-80 dark:text-body-muted-dark">No data available.</p>
-            ) : (
-              <>
-                <div className="h-[200px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
+                ) : recentLeads.length === 0 ? (
+                  <div className="p-10 text-center flex flex-col items-center justify-center h-full">
+                    <div className="w-16 h-16 bg-canvas-parchment dark:bg-surface-tile-3 rounded-full flex items-center justify-center mb-4 mx-auto">
+                      <Users className="w-8 h-8 text-ink-muted-48 dark:text-body-muted-dark" />
+                    </div>
+                    <p className="text-[15px] text-ink-muted-80 dark:text-body-muted-dark">No recent activity to show.</p>
+                  </div>
+                ) : (
+                  recentLeads.map((lead) => (
+                    <div key={lead._id} className="p-5 flex items-center justify-between hover:bg-canvas-parchment dark:hover:bg-surface-tile-3 transition-colors group">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-ink dark:bg-white text-white dark:text-ink flex items-center justify-center font-bold text-sm shadow-sm group-hover:scale-105 transition-transform">
+                          {getInitials(lead.name)}
+                        </div>
+                        <div>
+                          <p className="text-[15px] font-semibold text-ink dark:text-white">{lead.name}</p>
+                          <p className="text-[13px] text-ink-muted-80 dark:text-body-muted-dark mt-0.5">
+                            Added on {new Date(lead.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                      <span className={`px-[12px] py-[4px] inline-flex text-[12px] font-semibold rounded-full shadow-sm ${statusColors[lead.status] || 'bg-gray-100 text-gray-800 border border-gray-200'}`}>
+                        {lead.status}
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+    
+            {/* Lead Sources Pie Chart */}
+            <div className="apple-card p-0 overflow-hidden flex flex-col h-full">
+              <div className="px-6 py-5 border-b border-divider-hairline dark:border-surface-tile-3">
+                <h2 className="text-[18px] font-bold text-ink dark:text-white tracking-tight">Top Sources</h2>
+              </div>
+              <div className="p-6 flex-1 flex flex-col items-center justify-center">
+                {loading ? (
+                  <div className="w-6 h-6 border-2 border-ink dark:border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : pieData.length === 0 ? (
+                  <p className="text-[15px] text-ink-muted-80 dark:text-body-muted-dark">No data available.</p>
+                ) : (
+                  <>
+                    <div className="h-[200px] w-full">
+                      <ResponsiveContainer width="100%" height={200}>
                     <PieChart>
                       <Pie
                         data={pieData}

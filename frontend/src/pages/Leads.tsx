@@ -125,34 +125,34 @@ export default function Leads() {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto space-y-[32px]">
-      <div className="flex justify-between items-end">
-        <h1 className="text-[40px] font-semibold text-ink dark:text-white tracking-[0px]">Leads</h1>
-        <div className="flex gap-3 mb-2">
-          <button onClick={exportCSV} className="apple-btn-secondary flex items-center">
+    <div className="max-w-[1440px] mx-auto space-y-[24px] md:space-y-[32px]">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+        <h1 className="text-[32px] md:text-[40px] font-semibold text-ink dark:text-white tracking-[0px] leading-none">Leads</h1>
+        <div className="flex gap-3 w-full md:w-auto">
+          <button onClick={exportCSV} className="apple-btn-secondary flex items-center justify-center flex-1 md:flex-none whitespace-nowrap">
             <Download className="mr-2 h-4 w-4" /> Export CSV
           </button>
-          <button onClick={() => { setEditingLead(null); setIsModalOpen(true); }} className="apple-btn-primary flex items-center">
+          <button onClick={() => { setEditingLead(null); setIsModalOpen(true); }} className="apple-btn-primary flex items-center justify-center flex-1 md:flex-none whitespace-nowrap">
             <Plus className="mr-2 h-4 w-4" /> Add Lead
           </button>
         </div>
       </div>
 
       {/* Filters Bar */}
-      <div className="apple-card p-[16px] flex flex-wrap gap-4 items-center justify-between">
-        <div className="flex flex-1 min-w-[240px] gap-2 items-center bg-canvas-parchment dark:bg-surface-tile-3 rounded-pill px-4 h-[44px]">
-          <Search className="h-4 w-4 text-ink-muted-48 dark:text-body-muted-dark" />
+      <div className="apple-card p-4 flex flex-col lg:flex-row gap-4 items-center justify-between">
+        <div className="flex w-full lg:flex-1 min-w-[240px] gap-2 items-center bg-canvas-parchment dark:bg-surface-tile-3 rounded-pill px-4 h-[44px]">
+          <Search className="h-4 w-4 text-ink-muted-48 dark:text-body-muted-dark shrink-0" />
           <input
             type="text"
             placeholder="Search by name or email..."
-            className="bg-transparent border-none focus:outline-none w-full text-[17px] text-ink dark:text-white placeholder-ink-muted-48 dark:placeholder-body-muted-dark"
+            className="bg-transparent border-none focus:outline-none w-full text-[15px] md:text-[17px] text-ink dark:text-white placeholder-ink-muted-48 dark:placeholder-body-muted-dark min-w-0"
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(1); }}
           />
         </div>
 
-        <div className="flex flex-wrap gap-3 items-center">
-          <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }} className="apple-input-box">
+        <div className="grid grid-cols-2 md:flex flex-wrap gap-3 w-full lg:w-auto">
+          <select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }} className="apple-input-box w-full md:w-auto min-w-[140px] text-[14px]">
             <option value="">All Statuses</option>
             <option value="New">New</option>
             <option value="Contacted">Contacted</option>
@@ -160,14 +160,14 @@ export default function Leads() {
             <option value="Lost">Lost</option>
           </select>
 
-          <select value={sourceFilter} onChange={(e) => { setSourceFilter(e.target.value); setPage(1); }} className="apple-input-box">
+          <select value={sourceFilter} onChange={(e) => { setSourceFilter(e.target.value); setPage(1); }} className="apple-input-box w-full md:w-auto min-w-[140px] text-[14px]">
             <option value="">All Sources</option>
             <option value="Website">Website</option>
             <option value="Instagram">Instagram</option>
             <option value="Referral">Referral</option>
           </select>
 
-          <select value={sortOption} onChange={(e) => { setSortOption(e.target.value); setPage(1); }} className="apple-input-box">
+          <select value={sortOption} onChange={(e) => { setSortOption(e.target.value); setPage(1); }} className="apple-input-box w-full md:w-auto col-span-2 md:col-span-1 min-w-[140px] text-[14px]">
             <option value="latest">Sort by Latest</option>
             <option value="oldest">Sort by Oldest</option>
           </select>
